@@ -1,0 +1,186 @@
+/* Google Fonts — doit être en premier, avant les directives Tailwind */
+@import url('https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   CSS CUSTOM PROPERTIES — BT Capital Design Tokens
+   Available via var(--btc-*) in any Svelte component or CSS file.
+============================================================================= */
+:root {
+  /* Brand - Gold */
+  --btc-gold:        #E79412;
+  --btc-gold-light:  #F5EDE3;
+  --btc-gold-dark:   #B97208;
+
+  /* Status - Green */
+  --btc-green:       #059669;
+  --btc-green-light: #E6F4F0;
+  --btc-green-dark:  #047857;
+
+  /* Status - Red */
+  --btc-red:         #DE3434;
+  --btc-red-light:   #FDEAEA;
+
+  /* Neutral */
+  --btc-muted:       #64748B;
+  --btc-navy:        #0F172A;
+
+  /* Backgrounds */
+  --btc-canvas:      #F2F5F9;
+  --btc-surface:     #E8EDF4;
+  --btc-border:      #D0D8E6;
+}
+
+/* Dark mode — active when data-theme="btcapital-dark" is set on <html> */
+[data-theme='btcapital-dark'] {
+  --btc-muted:       #94A3B8;
+  --btc-navy:        #F1F5F9;
+  --btc-canvas:      #0F172A;
+  --btc-surface:     #1E293B;
+  --btc-border:      #334155;
+  --btc-green:       #34D399;
+  --btc-green-light: #022C22;
+  --btc-red:         #F87171;
+  --btc-red-light:   #1A0000;
+}
+
+/* =============================================================================
+   BASE
+============================================================================= */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-base-100 text-base-content;
+  }
+
+  /* Playfair sur les titres h1–h3 par défaut */
+  h1, h2, h3 {
+    font-family: 'Playfair', Georgia, serif;
+  }
+
+  /* Subtle scrollbar (Chrome / Edge) */
+  ::-webkit-scrollbar       { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-base-200; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--btc-muted);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--btc-gold);
+  }
+}
+
+/* =============================================================================
+   COMPONENTS
+============================================================================= */
+@layer components {
+
+  /* Layout */
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16 lg:py-24;
+  }
+
+  /* Forms */
+  .input-error-text {
+    @apply text-error text-xs mt-1;
+  }
+
+  /* Cards */
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  /* ── Gradients ──────────────────────────────────────────────────────────── */
+
+  /* Gold gradient — hero buttons, banners */
+  .gradient-gold {
+    background: linear-gradient(135deg, var(--btc-gold) 0%, var(--btc-gold-dark) 100%);
+  }
+
+  /* Subtle background gradient for sections */
+  .gradient-canvas {
+    background: linear-gradient(180deg, var(--btc-canvas) 0%, var(--btc-surface) 100%);
+  }
+
+  /* Backward-compatible alias */
+  .gradient-primary {
+    background: linear-gradient(135deg, var(--btc-gold) 0%, var(--btc-gold-dark) 100%);
+  }
+
+  /* ── Status badges (soft pill style) ───────────────────────────────────── */
+
+  .badge-success-soft {
+    background-color: var(--btc-green-light);
+    color: var(--btc-green-dark);
+    @apply text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-error-soft {
+    background-color: var(--btc-red-light);
+    color: var(--btc-red);
+    @apply text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-gold-soft {
+    background-color: var(--btc-gold-light);
+    color: var(--btc-gold-dark);
+    @apply text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-muted {
+    @apply text-xs font-medium px-2.5 py-0.5 rounded-full bg-base-200 text-base-content/60;
+  }
+
+  /* ── Colored surfaces (left-border accent cards) ────────────────────────── */
+
+  .surface-gold {
+    background-color: var(--btc-gold-light);
+    border-left: 3px solid var(--btc-gold);
+    @apply p-4 rounded-r-lg;
+  }
+
+  .surface-success {
+    background-color: var(--btc-green-light);
+    border-left: 3px solid var(--btc-green);
+    @apply p-4 rounded-r-lg;
+  }
+
+  .surface-error {
+    background-color: var(--btc-red-light);
+    border-left: 3px solid var(--btc-red);
+    @apply p-4 rounded-r-lg;
+  }
+}
+
+/* =============================================================================
+   UTILITIES
+============================================================================= */
+@layer utilities {
+
+  .text-muted {
+    color: var(--btc-muted);
+  }
+
+  .border-brand {
+    border-color: var(--btc-border);
+  }
+
+  .bg-canvas {
+    background-color: var(--btc-canvas);
+  }
+
+  .bg-surface {
+    background-color: var(--btc-surface);
+  }
+}
