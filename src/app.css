@@ -11,40 +11,40 @@
 ============================================================================= */
 :root {
   /* Brand - Gold */
-  --btc-gold:        #E79412;
-  --btc-gold-light:  #F5EDE3;
-  --btc-gold-dark:   #B97208;
+  --btc-gold: #E79412;
+  --btc-gold-light: #F5EDE3;
+  --btc-gold-dark: #B97208;
 
   /* Status - Green */
-  --btc-green:       #059669;
+  --btc-green: #059669;
   --btc-green-light: #E6F4F0;
-  --btc-green-dark:  #047857;
+  --btc-green-dark: #047857;
 
   /* Status - Red */
-  --btc-red:         #DE3434;
-  --btc-red-light:   #FDEAEA;
+  --btc-red: #DE3434;
+  --btc-red-light: #FDEAEA;
 
   /* Neutral */
-  --btc-muted:       #64748B;
-  --btc-navy:        #0F172A;
+  --btc-muted: #64748B;
+  --btc-navy: #0F172A;
 
   /* Backgrounds */
-  --btc-canvas:      #F2F5F9;
-  --btc-surface:     #E8EDF4;
-  --btc-border:      #D0D8E6;
+  --btc-canvas: #F2F5F9;
+  --btc-surface: #E8EDF4;
+  --btc-border: #D0D8E6;
 }
 
 /* Dark mode — active when data-theme="btcapital-dark" is set on <html> */
 [data-theme='btcapital-dark'] {
-  --btc-muted:       #94A3B8;
-  --btc-navy:        #F1F5F9;
-  --btc-canvas:      #0F172A;
-  --btc-surface:     #1E293B;
-  --btc-border:      #334155;
-  --btc-green:       #34D399;
+  --btc-muted: #94A3B8;
+  --btc-navy: #F1F5F9;
+  --btc-canvas: #0F172A;
+  --btc-surface: #1E293B;
+  --btc-border: #334155;
+  --btc-green: #34D399;
   --btc-green-light: #022C22;
-  --btc-red:         #F87171;
-  --btc-red-light:   #1A0000;
+  --btc-red: #F87171;
+  --btc-red-light: #1A0000;
 }
 
 /* =============================================================================
@@ -61,17 +61,27 @@
   }
 
   /* Playfair sur les titres h1–h3 par défaut */
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-family: 'Playfair', Georgia, serif;
   }
 
   /* Subtle scrollbar (Chrome / Edge) */
-  ::-webkit-scrollbar       { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { @apply bg-base-200; }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-base-200;
+  }
+
   ::-webkit-scrollbar-thumb {
     background: var(--btc-muted);
     border-radius: 3px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: var(--btc-gold);
   }
@@ -182,5 +192,21 @@
 
   .bg-surface {
     background-color: var(--btc-surface);
+  }
+
+  .stat {
+    @apply bg-white rounded-3xl px-10 py-6 shadow-black/20 shadow-[10_10_10_10px];
+  }
+
+  .stat-title {
+    @apply text-sm font-normal text-muted uppercase;
+  }
+
+  .stat-value {
+    @apply text-3xl font-semibold text-base-content mt-3;
+  }
+
+  .stat-desc {
+    @apply text-[14px] font-normal mt-4;
   }
 }

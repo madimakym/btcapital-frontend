@@ -44,11 +44,24 @@
 
 <div class="space-y-8">
   <!-- Header -->
-  <div class="flex items-start justify-between bg-white rounded-3xl px-10 py-10 shadow-xs shadow-black/20">
+  <div class="flex items-center justify-between">
+    <h1 class="text-4xl font-medium">Tableau de bord</h1>
+    <ul class="flex items-center gap-2">
+      <li>
+        <a href="/dashboard/kyc" class="btn btn-ghost btn-sm">Documents KYC</a>
+      </li>
+      <li>
+        <a href="/dashboard/profile" class="btn btn-ghost btn-sm">Mon profil</a>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="flex items-start justify-between bg-white rounded-3xl px-10 py-10 shadow-xs shadow-black/20"
+  >
     <div>
       <h1 class="text-4xl font-medium">{greetingTime()}, {user?.firstName}</h1>
       <p class="text-base-content/50 mt-1 text-sm">
-         Voici un résumé de votre activité sur BT Capital.
+        Voici un résumé de votre activité sur BT Capital.
       </p>
     </div>
     <div class="flex items-center gap-2">
@@ -62,41 +75,29 @@
   </div>
 
   <!-- Quick stats -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-    <div class="stat bg-base-200 rounded-2xl">
-      <div class="stat-title text-xs">Statut du compte</div>
-      <div class="stat-value text-lg">
-        {user?.status === "ACTIVE" ? "✅ Actif" : "⏳ En attente"}
-      </div>
-      <div class="stat-desc">
-        {user?.emailVerified ? "Email vérifié" : "Email non vérifié"}
-      </div>
+  <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+    <div class="stat">
+      <div class="stat-title text-xs">Utilisateurs</div>
+      <div class="stat-value text-lg">104</div>
+      <div class="stat-desc text-secondary">Total · Actifs</div>
     </div>
 
-    <div class="stat bg-base-200 rounded-2xl">
-      <div class="stat-title text-xs">Documents KYC</div>
-      {#if loadingKyc}
-        <div class="stat-value text-lg">
-          <span class="loading loading-dots loading-sm"></span>
-        </div>
-      {:else}
-        <div class="stat-value text-lg">{approvedKyc} / {kycDocs.length}</div>
-        <div class="stat-desc">
-          {pendingKyc > 0
-            ? `${pendingKyc} en cours de vérification`
-            : "approuvés"}
-        </div>
-      {/if}
+    <div class="stat">
+      <div class="stat-title text-xs">KYC en attente</div>
+      <div class="stat-value text-lg">14</div>
+      <div class="stat-desc text-secondary">Nb de dossiers à traiter</div>
     </div>
 
-    <div class="stat bg-base-200 rounded-2xl">
-      <div class="stat-title text-xs">Profil</div>
-      <div class="stat-value text-lg">
-        {ROLE_LABELS[user?.role ?? "INVESTOR"]}
-      </div>
-      <div class="stat-desc">
-        <a href="/profile" class="link link-primary">Compléter mon profil →</a>
-      </div>
+    <div class="stat">
+      <div class="stat-title text-xs">Inscriptions</div>
+      <div class="stat-value text-lg">14</div>
+      <div class="stat-desc text-primary">12 Inscrits cette semaine</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title text-xs">Projets en cours d’examen</div>
+      <div class="stat-value text-lg">14</div>
+      <div class="stat-desc text-red">En attente de validation</div>
     </div>
   </div>
 
