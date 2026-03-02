@@ -111,7 +111,7 @@
             <div class="flex items-start justify-between gap-4">
               <div class="flex-1">
                 <div class="flex items-center gap-2 mb-1">
-                  <h3 class="font-semibold">{KYC_DOC_LABELS[doc.docType]}</h3>
+                  <h3 class="font-semibold">{KYC_DOC_LABELS[doc.documentType]}</h3>
                   <StatusBadge status={doc.status} />
                 </div>
                 <p class="text-sm text-base-content/50 mb-1">
@@ -122,7 +122,7 @@
                   <span class="font-mono text-xs">{doc.userId}</span>
                 </p>
                 <p class="text-xs text-base-content/40">
-                  Soumis le {new Date(doc.uploadedAt).toLocaleDateString('fr-FR', {
+                  Soumis le {new Date(doc.submittedAt).toLocaleDateString('fr-FR', {
                     day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
                   })}
                 </p>
@@ -162,7 +162,7 @@
     <div class="modal-box">
       <h3 class="font-bold text-lg mb-1">Rejeter le document</h3>
       <p class="text-sm text-base-content/50 mb-4">
-        {KYC_DOC_LABELS[reviewingDoc.docType]} — {reviewingDoc.fileName}
+        {KYC_DOC_LABELS[reviewingDoc.documentType]} — {reviewingDoc.fileName}
       </p>
 
       <div class="form-control mb-4">

@@ -112,7 +112,7 @@
           Soumettez vos documents KYC pour accéder à toutes les fonctionnalités.
         </p>
       </div>
-      <a href="/kyc" class="btn btn-warning btn-sm">Soumettre →</a>
+      <a href="/profile/kyc" class="btn bg-black text-white border-none btn-sm">Soumettre →</a>
     </div>
   {/if}
 </div>

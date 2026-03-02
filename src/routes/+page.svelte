@@ -1,6 +1,5 @@
 <script lang="ts">
   import { currentUser } from '$lib/stores/auth';
-  import { ROLE_LABELS } from '$lib/types';
 </script>
 
 <svelte:head>
@@ -21,7 +20,7 @@
       <a href="/auth/login" class="btn btn-ghost btn-sm">Connexion</a>
       <a href="/auth/register" class="btn btn-primary btn-sm">S'inscrire</a>
     {/if}
-  </div>
+  </div> 
 </nav>
 
 <!-- ===== HERO ===== -->

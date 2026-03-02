@@ -5,9 +5,9 @@ export type UserStatus = 'PENDING_VERIFICATION' | 'ACTIVE' | 'SUSPENDED' | 'DELE
 export type KycDocType =
   | 'NATIONAL_ID'
   | 'PASSPORT'
-  | 'DRIVING_LICENSE'
   | 'PROOF_OF_ADDRESS'
-  | 'SELFIE';
+  | 'KBIS'
+  | 'STATUTES';
 export type KycStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 export type KycDecision = 'APPROVE' | 'REJECT';
 
@@ -45,6 +45,11 @@ export interface ForgotPasswordRequest {
 
 export interface ResetPasswordRequest {
   token: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
   newPassword: string;
 }
 
@@ -114,10 +119,12 @@ export type AnyProfileRequest =
 export interface KycDocumentResponse {
   id: string;
   userId: string;
-  docType: KycDocType;
+  documentType: KycDocType;
   status: KycStatus;
   fileName: string;
-  uploadedAt: string;
+  mimeType: string;
+  fileSizeBytes: number;
+  submittedAt: string;
   reviewedAt?: string;
   reviewComment?: string;
 }
@@ -180,9 +187,9 @@ export const STATUS_LABELS: Record<UserStatus, string> = {
 export const KYC_DOC_LABELS: Record<KycDocType, string> = {
   NATIONAL_ID: "Carte nationale d'identité",
   PASSPORT: 'Passeport',
-  DRIVING_LICENSE: 'Permis de conduire',
   PROOF_OF_ADDRESS: 'Justificatif de domicile',
-  SELFIE: 'Selfie'
+  KBIS: 'Extrait KBIS',
+  STATUTES: 'Statuts de la société'
 };
 
 export const KYC_STATUS_LABELS: Record<KycStatus, string> = {

@@ -11,7 +11,6 @@
     exact?: boolean;
   }
   const user = $derived($currentUser);
-  console.log("currentUser ===>", user);
 
   const appItems: NavItem[] = [
     { href: "/dashboard", label: "Tableau de bord", icon: "▦", exact: true },

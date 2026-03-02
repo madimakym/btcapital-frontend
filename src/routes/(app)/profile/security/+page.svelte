@@ -1,5 +1,6 @@
 <script lang="ts">
   import { authApi } from "$lib/api/auth";
+  import { profileApi } from "$lib/api/profile";
   import { ApiException } from "$lib/api/client";
   import Alert from "$lib/components/Alert.svelte";
   import PageHeader from "$lib/components/PageHeader.svelte";
@@ -10,6 +11,9 @@
   let saving = $state(false);
   let error = $state("");
   let success = $state("");
+  let showCurrent = $state(false);
+  let showNew = $state(false);
+  let showConfirm = $state(false);
 
   const passwordsMatch = $derived(
     newPassword === confirmPassword || confirmPassword === "",
@@ -26,8 +30,7 @@
     success = "";
     saving = true;
     try {
-      // TODO: call API when endpoint is ready
-      await new Promise((r) => setTimeout(r, 800));
+      await profileApi.changePassword({ currentPassword, newPassword });
       success = "Mot de passe mis à jour avec succès.";
       currentPassword = "";
       newPassword = "";
@@ -73,31 +76,56 @@
           <label class="label label-text font-medium" for="current">
             Mot de passe actuel
           </label>
-          <input
-            id="current"
-            type="password"
-            class="input input-bordered w-full max-w-sm"
-            bind:value={currentPassword}
-            required
-          />
+          <div class="relative w-full max-w-sm">
+            <input
+              id="current"
+              type={showCurrent ? "text" : "password"}
+              class="input input-bordered w-full pr-10"
+              bind:value={currentPassword}
+              required
+            />
+            <button
+              type="button"
+              class="absolute inset-y-0 right-0 flex items-center px-3 text-base-content/40 hover:text-base-content"
+              onclick={() => (showCurrent = !showCurrent)}
+              aria-label={showCurrent ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+            >
+              {#if showCurrent}
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              {:else}
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              {/if}
+            </button>
+          </div>
         </div>
 
         <div class="form-control">
           <label class="label label-text font-medium" for="new">
             Nouveau mot de passe
           </label>
-          <input
-            id="new"
-            type="password"
-            class="input input-bordered w-full max-w-sm {newPassword &&
-            !passwordStrong
-              ? 'input-error'
-              : ''}"
-            placeholder="Min. 8 caractères"
-            bind:value={newPassword}
-            required
-            minlength="8"
-          />
+          <div class="relative w-full max-w-sm">
+            <input
+              id="new"
+              type={showNew ? "text" : "password"}
+              class="input input-bordered w-full pr-10 {newPassword && !passwordStrong ? 'input-error' : ''}"
+              placeholder="Min. 8 caractères"
+              bind:value={newPassword}
+              required
+              minlength="8"
+            />
+            <button
+              type="button"
+              class="absolute inset-y-0 right-0 flex items-center px-3 text-base-content/40 hover:text-base-content"
+              onclick={() => (showNew = !showNew)}
+              aria-label={showNew ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+            >
+              {#if showNew}
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              {:else}
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              {/if}
+            </button>
+          </div>
           {#if newPassword && !passwordStrong}
             <p class="input-error-text">Au moins 8 caractères requis.</p>
           {/if}
@@ -107,16 +135,27 @@
           <label class="label label-text font-medium" for="confirm">
             Confirmer le nouveau mot de passe
           </label>
-          <input
-            id="confirm"
-            type="password"
-            class="input input-bordered w-full max-w-sm {confirmPassword &&
-            !passwordsMatch
-              ? 'input-error'
-              : ''}"
-            bind:value={confirmPassword}
-            required
-          />
+          <div class="relative w-full max-w-sm">
+            <input
+              id="confirm"
+              type={showConfirm ? "text" : "password"}
+              class="input input-bordered w-full pr-10 {confirmPassword && !passwordsMatch ? 'input-error' : ''}"
+              bind:value={confirmPassword}
+              required
+            />
+            <button
+              type="button"
+              class="absolute inset-y-0 right-0 flex items-center px-3 text-base-content/40 hover:text-base-content"
+              onclick={() => (showConfirm = !showConfirm)}
+              aria-label={showConfirm ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+            >
+              {#if showConfirm}
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              {:else}
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              {/if}
+            </button>
+          </div>
           {#if confirmPassword && !passwordsMatch}
             <p class="input-error-text">
               Les mots de passe ne correspondent pas.

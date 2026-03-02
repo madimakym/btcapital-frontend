@@ -5,8 +5,7 @@ export const kycApi = {
   async uploadDocument(file: File, docType: KycDocType): Promise<KycDocumentResponse> {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('docType', docType);
-    return apiUpload('/kyc/upload', formData, true);
+    return apiUpload(`/kyc/upload?documentType=${encodeURIComponent(docType)}`, formData, true);
   },
 
   async getMyDocuments(): Promise<KycDocumentResponse[]> {

@@ -36,10 +36,16 @@
     nameError = "";
     savingName = true;
     try {
-      await profileApi.updateMe({ firstName: editFirstName, lastName: editLastName });
+      await profileApi.updateMe({
+        firstName: editFirstName,
+        lastName: editLastName,
+      });
       modalOpen = false;
     } catch (err) {
-      nameError = err instanceof ApiException ? err.message : "Erreur lors de la mise à jour.";
+      nameError =
+        err instanceof ApiException
+          ? err.message
+          : "Erreur lors de la mise à jour.";
     } finally {
       savingName = false;
     }
@@ -204,7 +210,7 @@
   />
 
   <!-- Infos compte -->
-  <div class="card bg-base-100 border border-base-200">
+  <div class="card border border-base-200">
     <div class="card-body gap-4">
       <h2 class="card-title text-base">Informations du compte</h2>
       <div class="grid grid-cols-2 gap-4 text-sm">
@@ -582,10 +588,13 @@
     ></button>
 
     <!-- Panel -->
-    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-
+    <div
+      class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+    >
       <!-- Header -->
-      <div class="flex items-center justify-between px-6 py-5 border-b border-base-100">
+      <div
+        class="flex items-center justify-between px-6 py-5 border-b border-base-100"
+      >
         <div class="flex items-center gap-3">
           <div
             class="w-8 h-8 rounded-xl flex items-center justify-center"
@@ -603,8 +612,19 @@
           class="btn btn-ghost btn-sm btn-circle text-base-content/40"
           aria-label="Fermer"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>
@@ -647,7 +667,9 @@
         </div>
 
         <!-- Footer -->
-        <div class="flex items-center justify-end gap-2 px-6 py-4 border-t border-base-100 bg-base-50">
+        <div
+          class="flex items-center justify-end gap-2 px-6 py-4 border-t border-base-100 bg-base-50"
+        >
           <button
             type="button"
             class="btn btn-ghost btn-sm"

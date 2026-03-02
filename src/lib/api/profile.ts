@@ -4,7 +4,8 @@ import type {
   UserResponse,
   InvestorProfileRequest,
   EntrepreneurProfileRequest,
-  IncubatorProfileRequest
+  IncubatorProfileRequest,
+  ChangePasswordRequest
 } from '$lib/types';
 
 export const profileApi = {
@@ -12,6 +13,10 @@ export const profileApi = {
     const user = await apiRequest<UserResponse>('/me', {}, true);
     authStore.setUser(user);
     return user;
+  },
+
+  async changePassword(data: ChangePasswordRequest): Promise<void> {
+    return apiRequest('/me/password', { method: 'PUT', body: JSON.stringify(data) }, true);
   },
 
   async updateMe(data: Partial<Pick<UserResponse, 'firstName' | 'lastName'>>): Promise<UserResponse> {

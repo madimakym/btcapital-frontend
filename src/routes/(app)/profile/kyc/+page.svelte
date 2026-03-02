@@ -1,27 +1,26 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { kycApi } from '$lib/api/kyc';
-  import Alert from '$lib/components/Alert.svelte';
-  import StatusBadge from '$lib/components/StatusBadge.svelte';
-  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
-  import { ApiException } from '$lib/api/client';
-  import { KYC_DOC_LABELS, type KycDocType, type KycDocumentResponse } from '$lib/types';
+  import { onMount } from "svelte";
+  import { kycApi } from "$lib/api/kyc";
+  import Alert from "$lib/components/Alert.svelte";
+  import StatusBadge from "$lib/components/StatusBadge.svelte";
+  import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
+  import { ApiException } from "$lib/api/client";
+  import {
+    KYC_DOC_LABELS,
+    type KycDocType,
+    type KycDocumentResponse,
+  } from "$lib/types";
+  import PageHeader from "$lib/components/PageHeader.svelte";
 
-  const docTypes: KycDocType[] = [
-    'NATIONAL_ID',
-    'PASSPORT',
-    'DRIVING_LICENSE',
-    'PROOF_OF_ADDRESS',
-    'SELFIE'
-  ];
+  const docTypes: KycDocType[] = ["NATIONAL_ID", "PASSPORT", "PROOF_OF_ADDRESS", "KBIS", "STATUTES"];
 
   let documents = $state<KycDocumentResponse[]>([]);
   let loading = $state(true);
   let uploading = $state(false);
-  let error = $state('');
-  let success = $state('');
+  let error = $state("");
+  let success = $state("");
 
-  let selectedDocType = $state<KycDocType>('NATIONAL_ID');
+  let selectedDocType = $state<KycDocType>("NATIONAL_ID");
   let selectedFile = $state<File | null>(null);
 
   onMount(async () => {
@@ -47,50 +46,38 @@
     e.preventDefault();
     if (!selectedFile) return;
 
-    error = '';
-    success = '';
+    error = "";
+    success = "";
     uploading = true;
 
     try {
       const doc = await kycApi.uploadDocument(selectedFile, selectedDocType);
       documents = [...documents, doc];
-      success = 'Document soumis avec succès. Il sera examiné sous 24-48h.';
+      success = "Document soumis avec succès. Il sera examiné sous 24-48h.";
       selectedFile = null;
       // Reset file input
-      const input = document.getElementById('file-input') as HTMLInputElement;
-      if (input) input.value = '';
+      const input = document.getElementById("file-input") as HTMLInputElement;
+      if (input) input.value = "";
     } catch (err) {
-      error = err instanceof ApiException ? err.message : 'Erreur lors de l\'upload.';
+      error =
+        err instanceof ApiException ? err.message : "Erreur lors de l'upload.";
     } finally {
       uploading = false;
     }
   }
 
-  const uploadedTypes = $derived(new Set(documents.map((d) => d.docType)));
+  const uploadedTypes = $derived(new Set(documents.map((d) => d.documentType)));
 </script>
 
 <svelte:head>
   <title>Documents KYC — BT Capital</title>
 </svelte:head>
 
-<div class="max-w-2xl mx-auto space-y-6">
-  <div>
-    <h1 class="text-2xl font-bold">Vérification d'identité (KYC)</h1>
-    <p class="text-base-content/50 text-sm mt-1">
-      Soumettez vos documents pour vérifier votre identité et accéder à toutes les fonctionnalités.
-    </p>
-  </div>
-
-  <!-- Info banner -->
-  <div class="alert alert-info shadow-sm">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <p class="text-sm">
-      Formats acceptés : <strong>PDF, JPG, PNG</strong>. Taille maximale : <strong>10 Mo</strong>.
-      Les documents sont traités sous <strong>24 à 48h</strong>.
-    </p>
-  </div>
+<div class="mx-auto space-y-6">
+  <PageHeader
+    title="Vérification d'identité (KYC)"
+    description="Soumettez vos documents pour vérifier votre identité et accéder à toutes les fonctionnalités."
+  />
 
   <!-- Upload form -->
   <div class="card bg-base-100 border border-base-200">
@@ -98,27 +85,39 @@
       <h2 class="card-title text-base">Soumettre un document</h2>
 
       {#if error}
-        <Alert type="error" message={error} onDismiss={() => (error = '')} />
+        <Alert type="error" message={error} onDismiss={() => (error = "")} />
       {/if}
       {#if success}
-        <Alert type="success" message={success} onDismiss={() => (success = '')} />
+        <Alert
+          type="success"
+          message={success}
+          onDismiss={() => (success = "")}
+        />
       {/if}
 
       <form onsubmit={handleUpload} class="flex flex-col gap-4 mt-2">
         <div class="form-control">
-          <label class="label label-text font-medium" for="docType">Type de document</label>
-          <select id="docType" class="select select-bordered w-full" bind:value={selectedDocType}>
+          <label class="label label-text font-medium" for="docType"
+            >Type de document</label
+          >
+          <select
+            id="docType"
+            class="select select-bordered w-full"
+            bind:value={selectedDocType}
+          >
             {#each docTypes as type}
               <option value={type}>
                 {KYC_DOC_LABELS[type]}
-                {uploadedTypes.has(type) ? '(déjà soumis)' : ''}
+                {uploadedTypes.has(type) ? "(déjà soumis)" : ""}
               </option>
             {/each}
           </select>
         </div>
 
         <div class="form-control">
-          <label class="label label-text font-medium" for="file-input">Fichier</label>
+          <label class="label label-text font-medium" for="file-input"
+            >Fichier</label
+          >
           <input
             id="file-input"
             type="file"
@@ -129,7 +128,9 @@
           />
           {#if selectedFile}
             <p class="text-xs text-base-content/50 mt-1">
-              {selectedFile.name} — {(selectedFile.size / 1024 / 1024).toFixed(2)} Mo
+              {selectedFile.name} — {(selectedFile.size / 1024 / 1024).toFixed(
+                2,
+              )} Mo
             </p>
           {/if}
         </div>
@@ -176,16 +177,23 @@
             <tbody>
               {#each documents as doc}
                 <tr>
-                  <td class="font-medium text-sm">{KYC_DOC_LABELS[doc.docType]}</td>
-                  <td class="text-sm text-base-content/60 truncate max-w-[150px]">{doc.fileName}</td>
+                  <td class="font-medium text-sm"
+                    >{KYC_DOC_LABELS[doc.documentType]}</td
+                  >
+                  <td
+                    class="text-sm text-base-content/60 truncate max-w-[150px]"
+                    >{doc.fileName}</td
+                  >
                   <td>
                     <StatusBadge status={doc.status} />
                     {#if doc.reviewComment}
-                      <p class="text-xs text-base-content/40 mt-1">{doc.reviewComment}</p>
+                      <p class="text-xs text-base-content/40 mt-1">
+                        {doc.reviewComment}
+                      </p>
                     {/if}
                   </td>
                   <td class="text-sm text-base-content/50">
-                    {new Date(doc.uploadedAt).toLocaleDateString('fr-FR')}
+                    {new Date(doc.submittedAt).toLocaleDateString("fr-FR")}
                   </td>
                 </tr>
               {/each}
