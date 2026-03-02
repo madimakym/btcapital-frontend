@@ -61,7 +61,7 @@ export default {
 
           // Fonds
           'base-100': '#F2F5F9',   // fond principal (canvas)
-          'base-200': '#E8EDF4',   // fond cartes / sidebar
+          'base-200': '#e7ecf21a',   // fond cartes / sidebar
           'base-300': '#D0D8E6',   // bordures, séparateurs
           'base-content': '#0F172A', // texte principal (navy)
 

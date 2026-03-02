@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { authStore } from "$lib/stores/auth";
-  import Sidebar from "$lib/components/Sidebar.svelte";
+  import Navbar from "$lib/components/Navbar.svelte";
   import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
 
   let { children } = $props();
@@ -30,14 +30,14 @@
     <LoadingSpinner size="lg" text="Chargement..." />
   </div>
 {:else}
-  <div class="flex min-h-screen">
-    <!-- <Sidebar /> -->
-    <div class="flex-1 flex flex-col min-w-0">
-      <main class="flex-1 p-10 bg-base-200 overflow-auto">
-        <div class="mx-auto max-w-[1300px]">
+  <div class="flex flex-col min-h-screen">
+    <main class="flex-1 p-10 bg-base-200 overflow-auto">
+      <div class="mx-auto max-w-[1300px]">
+        <Navbar />
+        <div class="pt-10">
           {@render children()}
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
 {/if}

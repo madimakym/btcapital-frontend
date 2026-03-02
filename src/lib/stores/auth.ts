@@ -1,5 +1,6 @@
 import { writable, derived, get } from 'svelte/store';
 import { browser } from '$app/environment';
+import { PUBLIC_API_URL } from '$env/static/public';
 import type { User, LoginResponse } from '$lib/types';
 
 // ==================== State interface ====================
@@ -21,15 +22,51 @@ export function createAuthStore() {
     initialized: false
   });
 
-  function init() {
+  // ── Init : restaure la session et rafraîchit silencieusement le token ──
+  async function init() {
     if (!browser) {
       update((s) => ({ ...s, initialized: true }));
       return;
     }
-    const refreshToken = localStorage.getItem('btc_refresh_token');
+
+    const storedRefresh = localStorage.getItem('btc_refresh_token');
     const userStr = localStorage.getItem('btc_user');
-    const user = userStr ? (JSON.parse(userStr) as User) : null;
-    update((s) => ({ ...s, refreshToken, user, initialized: true }));
+    const storedUser = userStr ? (JSON.parse(userStr) as User) : null;
+
+    if (!storedRefresh) {
+      set({ user: null, accessToken: null, refreshToken: null, initialized: true });
+      return;
+    }
+
+    // Silent refresh — obtenir un accessToken frais sans que l'utilisateur le voie
+    try {
+      const res = await fetch(`${PUBLIC_API_URL}/auth/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken: storedRefresh })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const freshUser: User = data.user ?? storedUser;
+        localStorage.setItem('btc_refresh_token', data.refreshToken);
+        if (freshUser) localStorage.setItem('btc_user', JSON.stringify(freshUser));
+        set({
+          user: freshUser,
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+          initialized: true
+        });
+        return;
+      }
+    } catch {
+      // Erreur réseau — on continue sans token (mode dégradé)
+    }
+
+    // Le refresh a échoué (token révoqué ou expiré) → déconnexion propre
+    localStorage.removeItem('btc_refresh_token');
+    localStorage.removeItem('btc_user');
+    set({ user: null, accessToken: null, refreshToken: null, initialized: true });
   }
 
   function login(response: LoginResponse) {

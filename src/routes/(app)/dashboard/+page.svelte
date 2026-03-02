@@ -43,18 +43,6 @@
 </svelte:head>
 
 <div class="space-y-8">
-  <!-- Header -->
-  <div class="flex items-center justify-between">
-    <h1 class="text-4xl font-medium">Tableau de bord</h1>
-    <ul class="flex items-center gap-2">
-      <li>
-        <a href="/dashboard/kyc" class="btn btn-ghost btn-sm">Documents KYC</a>
-      </li>
-      <li>
-        <a href="/dashboard/profile" class="btn btn-ghost btn-sm">Mon profil</a>
-      </li>
-    </ul>
-  </div>
   <div
     class="flex items-start justify-between bg-white rounded-3xl px-10 py-10 shadow-xs shadow-black/20"
   >
@@ -125,57 +113,6 @@
         </p>
       </div>
       <a href="/kyc" class="btn btn-warning btn-sm">Soumettre →</a>
-    </div>
-  {/if}
-
-  <!-- Quick links -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    {#each [{ href: "/profile", title: "Mon profil", desc: "Complétez votre profil pour être visible", icon: "◉", color: "bg-primary/10 text-primary" }, { href: "/kyc", title: "Documents KYC", desc: "Gérez vos pièces justificatives", icon: "⊡", color: "bg-secondary/10 text-secondary" }, { href: "/", title: "Explorer", desc: "Découvrez la plateforme BT Capital", icon: "◎", color: "bg-accent/10 text-accent" }] as card}
-      <a
-        href={card.href}
-        class="card bg-base-100 border border-base-200 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer"
-      >
-        <div class="card-body">
-          <div
-            class="w-10 h-10 rounded-xl {card.color} flex items-center justify-center text-xl mb-2"
-          >
-            {card.icon}
-          </div>
-          <h3 class="font-semibold">{card.title}</h3>
-          <p class="text-sm text-base-content/50">{card.desc}</p>
-        </div>
-      </a>
-    {/each}
-  </div>
-
-  <!-- KYC document list -->
-  {#if kycDocs.length > 0}
-    <div class="card bg-base-100 border border-base-200">
-      <div class="card-body">
-        <h2 class="card-title text-base">Mes documents KYC</h2>
-        <div class="overflow-x-auto">
-          <table class="table table-sm">
-            <thead>
-              <tr>
-                <th>Document</th>
-                <th>Statut</th>
-                <th>Soumis le</th>
-              </tr>
-            </thead>
-            <tbody>
-              {#each kycDocs as doc}
-                <tr>
-                  <td class="font-medium text-sm">{doc.fileName}</td>
-                  <td><StatusBadge status={doc.status} /></td>
-                  <td class="text-sm text-base-content/50">
-                    {new Date(doc.uploadedAt).toLocaleDateString("fr-FR")}
-                  </td>
-                </tr>
-              {/each}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   {/if}
 </div>
