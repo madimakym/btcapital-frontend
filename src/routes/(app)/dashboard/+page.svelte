@@ -6,6 +6,9 @@
   import StatusBadge from "$lib/components/StatusBadge.svelte";
   import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
   import { ROLE_LABELS, type KycDocumentResponse } from "$lib/types";
+  import QuickStats from "$lib/components/QuickStats.svelte";
+  import AdminVerificationQueue from "$lib/components/AdminVerificationQueue.svelte";
+  import AdminRecentTransactions from "$lib/components/AdminRecentTransactions.svelte";
 
   let kycDocs = $state<KycDocumentResponse[]>([]);
   let loadingKyc = $state(true);
@@ -47,8 +50,14 @@
     class="flex items-start justify-between bg-white rounded-3xl px-10 py-10 shadow-xs shadow-black/20"
   >
     <div>
-      <h1 class="text-4xl font-medium">{greetingTime()}, {user?.firstName}</h1>
-      <p class="text-base-content/50 mt-1 text-sm">
+      {#if user?.role === "ADMIN"}
+        <h1 class="text-5xl font-medium mb-3">Admin Dashboard</h1>
+      {:else}
+        <h1 class="text-5xl font-medium mb-3">
+          {greetingTime()}, {user?.firstName}
+        </h1>
+      {/if}
+      <p class="text-base-content/50 mt-1 text-[16px]">
         Voici un résumé de votre activité sur BT Capital.
       </p>
     </div>
@@ -63,66 +72,20 @@
   </div>
 
   <!-- Quick stats -->
-  {#if user?.role === "ENTREPRENEUR"}
-    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-      <!-- Projets publiés -->
-      <div class="stat">
-        <div class="stat-title">Projets publiés</div>
-        <div class="stat-value">3</div>
-        <div class="stat-desc" style="color: var(--btc-gold);">1 en cours de revue</div>
-      </div>
+  {#if user?.role}
+    <QuickStats role={user.role} />
+  {/if}
+  {#if user?.role === "ADMIN"}
+    <!-- Verification queue cards -->
+    <AdminVerificationQueue />
+    <!-- Recents transactions -->
+    <AdminRecentTransactions />
 
-      <!-- Intérêts reçus -->
-      <div class="stat">
-        <div class="stat-title">Intérêts reçus</div>
-        <div class="stat-value">12</div>
-        <div class="stat-desc" style="color: var(--btc-green);">4 en attente de réponse</div>
-      </div>
-
-      <!-- Financement potentiel -->
-      <div class="stat">
-        <div class="stat-title">Financement potentiel</div>
-        <div class="stat-value text-2xl">2 400 000 €</div>
-        <div class="stat-desc text-base-content/50">Cumul des EOI acceptées</div>
-      </div>
-
-      <!-- Messages non lus -->
-      <div class="stat">
-        <div class="stat-title">Messages non lus</div>
-        <div class="stat-value">5</div>
-        <div class="stat-desc" style="color: var(--btc-muted);">3 conversations actives</div>
-      </div>
-    </div>
-  {:else}
-    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-      <div class="stat">
-        <div class="stat-title text-xs">Utilisateurs</div>
-        <div class="stat-value text-lg">104</div>
-        <div class="stat-desc text-secondary">Total · Actifs</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-title text-xs">KYC en attente</div>
-        <div class="stat-value text-lg">14</div>
-        <div class="stat-desc text-secondary">Nb de dossiers à traiter</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-title text-xs">Inscriptions</div>
-        <div class="stat-value text-lg">14</div>
-        <div class="stat-desc text-primary">12 Inscrits cette semaine</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-title text-xs">Projets en cours d’examen</div>
-        <div class="stat-value text-lg">14</div>
-        <div class="stat-desc text-red">En attente de validation</div>
-      </div>
-    </div>
   {/if}
 
+  <!-- -->
   <!-- KYC Warning -->
-  {#if !kycComplete && !loadingKyc}
+  <!-- {#if !kycComplete && !loadingKyc}
     <div class="alert alert-warning shadow-sm">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +107,9 @@
           Soumettez vos documents KYC pour accéder à toutes les fonctionnalités.
         </p>
       </div>
-      <a href="/profile/kyc" class="btn bg-black text-white border-none btn-sm">Soumettre →</a>
+      <a href="/profile/kyc" class="btn bg-black text-white border-none btn-sm"
+        >Soumettre →</a
+      >
     </div>
-  {/if}
+  {/if} -->
 </div>

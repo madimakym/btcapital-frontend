@@ -5,7 +5,7 @@
   import Alert from "$lib/components/Alert.svelte";
   import { ApiException } from "$lib/api/client";
 
-  let email = $state("makymadi@gmail.com");
+  let email = $state("admin@btcapital.com");
   let password = $state("Passer242#");
   let showPassword = $state(false);
   let loading = $state(false);
