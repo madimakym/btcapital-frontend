@@ -7,6 +7,7 @@
   import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
   import { ROLE_LABELS, type KycDocumentResponse } from "$lib/types";
   import QuickStats from "$lib/components/QuickStats.svelte";
+  import AdminPendingProjects from "$lib/components/AdminPendingProjects.svelte";
   import AdminVerificationQueue from "$lib/components/AdminVerificationQueue.svelte";
   import AdminRecentTransactions from "$lib/components/AdminRecentTransactions.svelte";
 
@@ -77,7 +78,10 @@
   {/if}
   {#if user?.role === "ADMIN"}
     <!-- Verification queue cards -->
-    <AdminVerificationQueue />
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <AdminPendingProjects />
+      <AdminVerificationQueue />
+    </div>
     <!-- Recents transactions -->
     <AdminRecentTransactions />
 

@@ -1,7 +1,7 @@
 // ==================== Enums ====================
 
 export type UserRole = 'INVESTOR' | 'ENTREPRENEUR' | 'INCUBATOR' | 'ADMIN';
-export type UserStatus = 'PENDING_VERIFICATION' | 'ACTIVE' | 'SUSPENDED' | 'DELETED';
+export type UserStatus = 'PENDING_VERIFICATION' | 'KYC_PENDING' | 'ACTIVE' | 'SUSPENDED' | 'DELETED';
 export type KycDocType =
   | 'NATIONAL_ID'
   | 'PASSPORT'
@@ -136,6 +136,26 @@ export interface KycReviewRequest {
 
 // ==================== Admin ====================
 
+export interface KycDocSummary {
+  id: string;
+  documentType: KycDocType;
+  status: KycStatus;
+  submittedAt: string;
+}
+
+export interface PendingVerificationUser {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string;
+  role: UserRole;
+  status: UserStatus;
+  createdAt: string;
+  kycDocuments: KycDocSummary[];
+}
+
+
+
 export interface AdminStats {
   totalUsers: number;
   activeUsers: number;
@@ -179,6 +199,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
 
 export const STATUS_LABELS: Record<UserStatus, string> = {
   PENDING_VERIFICATION: 'En attente de vérification',
+  KYC_PENDING: 'KYC en attente',
   ACTIVE: 'Actif',
   SUSPENDED: 'Suspendu',
   DELETED: 'Supprimé'

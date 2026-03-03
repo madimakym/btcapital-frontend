@@ -4,7 +4,8 @@ import type {
   UserResponse,
   KycDocumentResponse,
   KycReviewRequest,
-  PageResponse
+  PageResponse,
+  PendingVerificationUser
 } from '$lib/types';
 
 export const adminApi = {
@@ -37,5 +38,9 @@ export const adminApi = {
       method: 'PUT',
       body: JSON.stringify(data)
     }, true);
+  },
+
+  async getPendingVerificationUsers(page = 0, limit = 20): Promise<PageResponse<PendingVerificationUser>> {
+    return apiRequest(`/admin/users/kyc-pending?page=${page}&limit=${limit}`, {}, true);
   }
 };
