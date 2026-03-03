@@ -63,31 +63,63 @@
   </div>
 
   <!-- Quick stats -->
-  <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-    <div class="stat">
-      <div class="stat-title text-xs">Utilisateurs</div>
-      <div class="stat-value text-lg">104</div>
-      <div class="stat-desc text-secondary">Total · Actifs</div>
-    </div>
+  {#if user?.role === "ENTREPRENEUR"}
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <!-- Projets publiés -->
+      <div class="stat">
+        <div class="stat-title">Projets publiés</div>
+        <div class="stat-value">3</div>
+        <div class="stat-desc" style="color: var(--btc-gold);">1 en cours de revue</div>
+      </div>
 
-    <div class="stat">
-      <div class="stat-title text-xs">KYC en attente</div>
-      <div class="stat-value text-lg">14</div>
-      <div class="stat-desc text-secondary">Nb de dossiers à traiter</div>
-    </div>
+      <!-- Intérêts reçus -->
+      <div class="stat">
+        <div class="stat-title">Intérêts reçus</div>
+        <div class="stat-value">12</div>
+        <div class="stat-desc" style="color: var(--btc-green);">4 en attente de réponse</div>
+      </div>
 
-    <div class="stat">
-      <div class="stat-title text-xs">Inscriptions</div>
-      <div class="stat-value text-lg">14</div>
-      <div class="stat-desc text-primary">12 Inscrits cette semaine</div>
-    </div>
+      <!-- Financement potentiel -->
+      <div class="stat">
+        <div class="stat-title">Financement potentiel</div>
+        <div class="stat-value text-2xl">2 400 000 €</div>
+        <div class="stat-desc text-base-content/50">Cumul des EOI acceptées</div>
+      </div>
 
-    <div class="stat">
-      <div class="stat-title text-xs">Projets en cours d’examen</div>
-      <div class="stat-value text-lg">14</div>
-      <div class="stat-desc text-red">En attente de validation</div>
+      <!-- Messages non lus -->
+      <div class="stat">
+        <div class="stat-title">Messages non lus</div>
+        <div class="stat-value">5</div>
+        <div class="stat-desc" style="color: var(--btc-muted);">3 conversations actives</div>
+      </div>
     </div>
-  </div>
+  {:else}
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <div class="stat">
+        <div class="stat-title text-xs">Utilisateurs</div>
+        <div class="stat-value text-lg">104</div>
+        <div class="stat-desc text-secondary">Total · Actifs</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title text-xs">KYC en attente</div>
+        <div class="stat-value text-lg">14</div>
+        <div class="stat-desc text-secondary">Nb de dossiers à traiter</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title text-xs">Inscriptions</div>
+        <div class="stat-value text-lg">14</div>
+        <div class="stat-desc text-primary">12 Inscrits cette semaine</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title text-xs">Projets en cours d’examen</div>
+        <div class="stat-value text-lg">14</div>
+        <div class="stat-desc text-red">En attente de validation</div>
+      </div>
+    </div>
+  {/if}
 
   <!-- KYC Warning -->
   {#if !kycComplete && !loadingKyc}

@@ -196,7 +196,8 @@
   }
 
   .stat {
-    @apply bg-white rounded-3xl px-10 py-6 shadow-black/20 shadow-[10_10_10_10px];
+    @apply bg-white rounded-3xl px-10 py-6;
+    box-shadow: 1px 1px 12px #b6abab36;
   }
 
   .stat-title {
@@ -213,6 +214,7 @@
 
   .card {
     @apply bg-white;
+    box-shadow: 1px 1px 12px #b6abab36;
   }
 
   .card-title {

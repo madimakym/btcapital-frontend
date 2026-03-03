@@ -56,8 +56,8 @@
 
   <!-- Changer le mot de passe -->
   <div class="bg-white rounded-2xl border border-base-200 shadow-xs">
-    <div class="px-6 py-5 border-b border-base-100">
-      <h3 class="font-semibold text-sm">Changer le mot de passe</h3>
+    <div class="px-6 pt-5 border-b border-base-100">
+      <h2 class="card-title text-base">Changer le mot de passe</h2>
     </div>
     <div class="px-6 py-5">
       {#if error}
@@ -71,7 +71,7 @@
         />
       {/if}
 
-      <form onsubmit={handleSubmit} class="flex flex-col gap-4 mt-2">
+      <form onsubmit={handleSubmit} class="flex flex-col gap-4">
         <div class="form-control">
           <label class="label label-text font-medium" for="current">
             Mot de passe actuel
@@ -88,12 +88,40 @@
               type="button"
               class="absolute inset-y-0 right-0 flex items-center px-3 text-base-content/40 hover:text-base-content"
               onclick={() => (showCurrent = !showCurrent)}
-              aria-label={showCurrent ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+              aria-label={showCurrent
+                ? "Masquer le mot de passe"
+                : "Afficher le mot de passe"}
             >
               {#if showCurrent}
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                  /><path
+                    d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                  /><line x1="1" y1="1" x2="23" y2="23" /></svg
+                >
               {:else}
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path
+                    d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                  /><circle cx="12" cy="12" r="3" /></svg
+                >
               {/if}
             </button>
           </div>
@@ -107,7 +135,10 @@
             <input
               id="new"
               type={showNew ? "text" : "password"}
-              class="input input-bordered w-full pr-10 {newPassword && !passwordStrong ? 'input-error' : ''}"
+              class="input input-bordered w-full pr-10 {newPassword &&
+              !passwordStrong
+                ? 'input-error'
+                : ''}"
               placeholder="Min. 8 caractères"
               bind:value={newPassword}
               required
@@ -117,12 +148,40 @@
               type="button"
               class="absolute inset-y-0 right-0 flex items-center px-3 text-base-content/40 hover:text-base-content"
               onclick={() => (showNew = !showNew)}
-              aria-label={showNew ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+              aria-label={showNew
+                ? "Masquer le mot de passe"
+                : "Afficher le mot de passe"}
             >
               {#if showNew}
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                  /><path
+                    d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                  /><line x1="1" y1="1" x2="23" y2="23" /></svg
+                >
               {:else}
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path
+                    d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                  /><circle cx="12" cy="12" r="3" /></svg
+                >
               {/if}
             </button>
           </div>
@@ -139,7 +198,10 @@
             <input
               id="confirm"
               type={showConfirm ? "text" : "password"}
-              class="input input-bordered w-full pr-10 {confirmPassword && !passwordsMatch ? 'input-error' : ''}"
+              class="input input-bordered w-full pr-10 {confirmPassword &&
+              !passwordsMatch
+                ? 'input-error'
+                : ''}"
               bind:value={confirmPassword}
               required
             />
@@ -147,12 +209,40 @@
               type="button"
               class="absolute inset-y-0 right-0 flex items-center px-3 text-base-content/40 hover:text-base-content"
               onclick={() => (showConfirm = !showConfirm)}
-              aria-label={showConfirm ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+              aria-label={showConfirm
+                ? "Masquer le mot de passe"
+                : "Afficher le mot de passe"}
             >
               {#if showConfirm}
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                  /><path
+                    d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                  /><line x1="1" y1="1" x2="23" y2="23" /></svg
+                >
               {:else}
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path
+                    d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                  /><circle cx="12" cy="12" r="3" /></svg
+                >
               {/if}
             </button>
           </div>
@@ -178,16 +268,6 @@
           </button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- Sessions actives (placeholder) -->
-  <div class="bg-white rounded-2xl border border-base-200 shadow-xs">
-    <div class="px-6 py-5 border-b border-base-100">
-      <h3 class="font-semibold text-sm">Sessions actives</h3>
-    </div>
-    <div class="px-6 py-8 text-center text-sm text-base-content/40">
-      Gestion des sessions à venir.
     </div>
   </div>
 </div>
