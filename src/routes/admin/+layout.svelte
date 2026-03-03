@@ -48,7 +48,7 @@
       <div class="navbar bg-error/5 border-b border-error/20 px-6">
         <span class="badge badge-error badge-sm font-semibold">Administration</span>
       </div>
-      <main class="flex-1 p-6 bg-base-100 overflow-auto">
+      <main class="flex-1 p-6 overflow-auto">
         {@render children()}
       </main>
     </div>

@@ -31,8 +31,8 @@
   </div>
 {:else}
   <div class="flex flex-col min-h-screen">
-    <main class="flex-1 p-10 bg-base-200 overflow-auto">
-      <div class="mx-auto max-w-[1300px]">
+    <main class="flex-1 p-10 bg-base-100 overflow-auto">
+      <div class="mx-auto max-w-[1350px]">
         <Navbar />
         <div class="pt-10">
           {@render children()}

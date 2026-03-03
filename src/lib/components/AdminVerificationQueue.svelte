@@ -83,7 +83,9 @@
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
   <!-- Pending Project Approvals -->
   <div class="bg-white rounded-3xl px-8 py-8 shadow-xs shadow-black/20">
-    <h2 class="text-2xl font-semibold mb-6">En attente d'approbation</h2>
+    <h2 class="text-2xl font-semibold mb-6">
+      Projets en attente d'approbation
+    </h2>
     <div class="space-y-4">
       {#each projects as project (project.id)}
         <div class="border-2 border-base-200 rounded-2xl px-5 py-4">
@@ -147,9 +149,9 @@
           </p>
           <div class="flex items-center gap-3">
             <button
-              class="flex-1 btn btn-sm bg-[#2d7a4f] hover:bg-[#246040] text-white border-none rounded-lg h-9"
+              class="flex-1 btn btn-sm bg-[#069668] hover:bg-[#246040] text-white border-none rounded-lg h-9"
             >
-              Verify
+              Verifier
             </button>
             <button
               class="flex-1 btn btn-sm bg-transparent border border-red-500 text-red-500 hover:bg-red-50 rounded-lg h-9"
