@@ -156,6 +156,18 @@ export interface PendingVerificationUser {
 
 
 
+export interface UserDetailResponse {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string;
+  role: UserRole;
+  status: UserStatus;
+  emailVerified: boolean;
+  createdAt: string;
+  kycDocuments: KycDocumentResponse[];
+}
+
 export interface AdminStats {
   totalUsers: number;
   activeUsers: number;

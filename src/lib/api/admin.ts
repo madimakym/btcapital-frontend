@@ -1,7 +1,10 @@
 import { apiRequest } from './client';
+import { get } from 'svelte/store';
+import { PUBLIC_API_URL } from '$env/static/public';
 import type {
   AdminStats,
   UserResponse,
+  UserDetailResponse,
   KycDocumentResponse,
   KycReviewRequest,
   PageResponse,
@@ -42,5 +45,20 @@ export const adminApi = {
 
   async getPendingVerificationUsers(page = 0, limit = 20): Promise<PageResponse<PendingVerificationUser>> {
     return apiRequest(`/admin/users/kyc-pending?page=${page}&limit=${limit}`, {}, true);
+  },
+
+  async getUserDetail(userId: string): Promise<UserDetailResponse> {
+    return apiRequest(`/admin/users/${userId}/detail`, {}, true);
+  },
+
+  async getKycFileBlob(docId: string): Promise<{ url: string; mimeType: string }> {
+    const { authStore } = await import('$lib/stores/auth');
+    const { accessToken } = get(authStore);
+    const response = await fetch(`${PUBLIC_API_URL}/admin/kyc/${docId}/file?inline=true`, {
+      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
+    });
+    if (!response.ok) throw new Error('Fichier introuvable');
+    const blob = await response.blob();
+    return { url: URL.createObjectURL(blob), mimeType: blob.type };
   }
 };
