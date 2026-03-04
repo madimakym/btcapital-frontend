@@ -366,7 +366,7 @@
             src={previewUrl}
             title="Document PDF"
             class="w-full h-[70vh] rounded-lg"
-          />
+          ></iframe>
         {:else}
           <p class="text-base-content/50">
             Prévisualisation non disponible pour ce format.

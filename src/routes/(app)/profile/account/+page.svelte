@@ -647,7 +647,6 @@
               placeholder="Jean"
               bind:value={editFirstName}
               required
-              autofocus
             />
           </div>
 
